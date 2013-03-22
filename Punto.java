@@ -1,7 +1,3 @@
-//package cloneando;
-
-/* public class Punto { */ // Esto es lo que habia antes
-// lo nuebvo es el 'implements Cloneable'
 public class Punto implements Cloneable {
 
     int x, y, z;
