@@ -1,19 +1,15 @@
-public class Punto implements Cloneable {
+public class Punto_3d implements Cloneable {
 
     int x, y, z;
     
-    Punto ( int a , int b, int c ) {
+    Punto_3d ( int a , int b, int c ) {
         x = a; 
         y = b;
         z = c;
     }
 
-    Punto () {
+    Punto_3d () {
         this (0,0,0);
-		/*
-		this.x = a;
-		this.y = b;
-		*/
     }
 	
 	int getX(){ return x; }

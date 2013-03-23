@@ -85,10 +85,10 @@ public class EditorDeFiguras extends JFrame { //} implements MouseListener, KeyL
         });
 
         System.out.println("pintar un punto");
-        Punto a = new Punto();
-        Punto b = new Punto(10,10,10);
+        Punto_3d a = new Punto_3d();
+        Punto_3d b = new Punto_3d(10,10,10);
         Operaciones operaciones = new Operaciones();
-        double distancia = operaciones.DimeDistancia(a,b);
+        double distancia = operaciones.DimeDistancia_3d(a,b);
         System.out.println("distancia entre a y b: " + distancia);
     }
 
