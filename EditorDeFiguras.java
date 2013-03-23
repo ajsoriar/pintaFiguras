@@ -9,39 +9,6 @@ public class EditorDeFiguras extends JFrame { //} implements MouseListener, KeyL
     //int w = 800, h=600;
     int w, h;
 
-
-    //frame.addMouseListener(this);
-    //tetris.addKeyListener(this);
-
-    /*
-    public void mouseReleased(MouseEvent e) {
-
-        if (e.getButton() == MouseEvent.BUTTON1) {
-            System.out.print("1");
-
-        }
-
-        if (e.getButton() == MouseEvent.BUTTON3) {
-            System.out.print("3");
-
-        }
-    }
-
-
-    public void keyPressed(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        switch (keyCode) {
-            case KeyEvent.VK_LEFT:
-                System.out.print("lll");
-                break;
-
-            case KeyEvent.VK_RIGHT:
-                System.out.print("rrr");
-                break;
-        }
-    }
-    */
-
     public EditorDeFiguras() {
 
         super("Hola mundo con ventanas!");
@@ -120,15 +87,9 @@ public class EditorDeFiguras extends JFrame { //} implements MouseListener, KeyL
         System.out.println("pintar un punto");
         Punto a = new Punto();
         Punto b = new Punto(10,10,10);
-        double distancia = DimeDistancia(a,b);
+        Operaciones operaciones = new Operaciones();
+        double distancia = operaciones.DimeDistancia(a,b);
         System.out.println("distancia entre a y b: " + distancia);
-    }
-
-    // DimeDistancia entre dos puntos
-    public static double DimeDistancia ( Punto a , Punto b) {
-        System.out.println("--> DimeDistancia!");
-        double distancia = Math.sqrt(  Math.pow(a.getX()-b.getX(),2)  +  Math.pow(a.getY()-b.getY(),2)  +  Math.pow(a.getZ()-b.getZ(),2)  );
-        return distancia;
     }
 
     public void CalculaUserInterface (){
