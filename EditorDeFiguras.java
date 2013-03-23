@@ -4,10 +4,43 @@ import java.awt.event.*;
 
 //import DimeDistancia.*;
 
-public class EditorDeFiguras extends JFrame {
+public class EditorDeFiguras extends JFrame { //} implements MouseListener, KeyListener {
 
     //int w = 800, h=600;
     int w, h;
+
+
+    //frame.addMouseListener(this);
+    //tetris.addKeyListener(this);
+
+    /*
+    public void mouseReleased(MouseEvent e) {
+
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            System.out.print("1");
+
+        }
+
+        if (e.getButton() == MouseEvent.BUTTON3) {
+            System.out.print("3");
+
+        }
+    }
+
+
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        switch (keyCode) {
+            case KeyEvent.VK_LEFT:
+                System.out.print("lll");
+                break;
+
+            case KeyEvent.VK_RIGHT:
+                System.out.print("rrr");
+                break;
+        }
+    }
+    */
 
     public EditorDeFiguras() {
 
@@ -26,6 +59,26 @@ public class EditorDeFiguras extends JFrame {
             }
         });
 
+        this.addMouseListener(new MouseAdapter() { 
+            public void mousePressed(MouseEvent me) { 
+                System.out.println(me); 
+            } 
+        }); 
+
+        this.addKeyListener(new KeyAdapter() { 
+            public void keyPressed(KeyEvent e) {
+                int keyCode = e.getKeyCode();
+                switch (keyCode) {
+                    case KeyEvent.VK_LEFT:
+                        System.out.print("Tecla IZQUIERDA");
+                        break;
+
+                    case KeyEvent.VK_RIGHT:
+                        System.out.print("Tecla DERECHA");
+                        break;
+                }
+            }
+        }); 
     }
 
     public void paint(Graphics g) {
