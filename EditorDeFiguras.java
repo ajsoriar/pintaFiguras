@@ -67,16 +67,19 @@ public class EditorDeFiguras extends JFrame {
         System.out.println("pintar un punto");
         Punto a = new Punto();
         Punto b = new Punto(10,10,10);
-        double distancia = DimeDistancia(a,b);
+        Operaciones operaciones = new Operaciones();
+        double distancia = operaciones.DimeDistancia(a,b);
         System.out.println("distancia entre a y b: " + distancia);
     }
 
     // DimeDistancia entre dos puntos
+    /*
     public static double DimeDistancia ( Punto a , Punto b) {
         System.out.println("--> DimeDistancia!");
         double distancia = Math.sqrt(  Math.pow(a.getX()-b.getX(),2)  +  Math.pow(a.getY()-b.getY(),2)  +  Math.pow(a.getZ()-b.getZ(),2)  );
         return distancia;
     }
+    */
 
     public void CalculaUserInterface (){
         System.out.println("--> CalculaUserInterface!");
