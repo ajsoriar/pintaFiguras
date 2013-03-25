@@ -2,14 +2,36 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-//import DimeDistancia.*;
+public class PintaFiguras extends JFrame { //} implements MouseListener, KeyListener {
 
-public class EditorDeFiguras extends JFrame { //} implements MouseListener, KeyListener {
-
-    //int w = 800, h=600;
     int w, h;
 
-    public EditorDeFiguras() {
+    public static void main(String args[]) {
+        System.out.println("--> main!");
+        
+        PintaFiguras mf = new PintaFiguras();
+        mf.addWindowListener( new WindowAdapter() {
+
+            public void windowClosing( WindowEvent evt ){
+                System.out.print("cerrar!");
+                System.exit( 0 );
+            }
+
+            public void windowOpened(WindowEvent e) {
+                
+            }
+
+        });
+
+        System.out.println("pintar un punto");
+        Punto_3d a = new Punto_3d();
+        Punto_3d b = new Punto_3d(10,10,10);
+        Operaciones operaciones = new Operaciones();
+        double distancia = operaciones.DimeDistancia_3d(a,b);
+        System.out.println("distancia entre a y b: " + distancia);
+    }
+
+    public PintaFiguras() {
 
         super("Hola mundo con ventanas!");
         setBackground(Color.lightGray);
@@ -17,7 +39,7 @@ public class EditorDeFiguras extends JFrame { //} implements MouseListener, KeyL
         //setUndecorated(true);
         //pack(); No no no!
         setVisible(true);
-        System.out.println("--> EditorDeFiguras!");
+        System.out.println("--> PintaFiguras");
 
         this.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
@@ -65,31 +87,6 @@ public class EditorDeFiguras extends JFrame { //} implements MouseListener, KeyL
         g.setColor(Color.red);
         g.drawLine(0,0,this.w, this.h);
         
-    }
-
-    public static void main(String args[]) {
-        System.out.println("--> main!");
-        
-        EditorDeFiguras mf = new EditorDeFiguras();
-        mf.addWindowListener( new WindowAdapter() {
-
-            public void windowClosing( WindowEvent evt ){
-                System.out.print("cerrar!");
-                System.exit( 0 );
-            }
-
-            public void windowOpened(WindowEvent e) {
-                
-            }
-
-        });
-
-        System.out.println("pintar un punto");
-        Punto_3d a = new Punto_3d();
-        Punto_3d b = new Punto_3d(10,10,10);
-        Operaciones operaciones = new Operaciones();
-        double distancia = operaciones.DimeDistancia_3d(a,b);
-        System.out.println("distancia entre a y b: " + distancia);
     }
 
     public void CalculaUserInterface (){
