@@ -85,7 +85,7 @@ class MyPanel extends JPanel {
         System.out.println("MyPanel --> ancho:"+ this.w+" alto:"+ this.h);
     }
 
-    public Dimension getPreferredSize() {
+    public Dimension getPreferredSize() { // sin esto no sale bien el tamanyo, averiguar por que se tiene que definir aqui
         return new Dimension(640,480);
     }
 
