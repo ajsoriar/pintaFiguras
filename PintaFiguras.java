@@ -1,3 +1,7 @@
+// Pintar en un JPanel es frustrante! 
+// Se ve bien en Windows y mal en mac
+// A lo mejor es por que en win compilo con Java 7 y en mac con 6
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -31,6 +35,7 @@ public class PintaFiguras extends JFrame { //} implements MouseListener, KeyList
         System.out.println("distancia entre a y b: " + distancia);
     }
 
+    // Pintar en un JFrame funciona fatal, supermal! cosas raras pasaran.
     public PintaFiguras() {
 
         super("Hola mundo con ventanas!");
