@@ -2,29 +2,28 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class OtraForma_3 {
+public class OtraForma_4 {
 
     public static void main(String[] args) {
         System.out.println("--> main!");
         CreaFrame();
     }
 
-    public OtraForma_3() {
+    public OtraForma_4() {
         System.out.println("--> OtraForma_3");
     }
 
     private static void CreaFrame() {
         System.out.println("--> CreaFrame!");
 
-        JFrame f = new JFrame("Swing Paint Demo");
+        JFrame f = new JFrame("Pinta pinta forever");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(640,480);
+        
         f.add(new MyPanel());
         f.pack(); // No se pa que vale.
         f.setVisible(true);
     }
-
-
 }
 
 // Internet, fuente de toda sabiduria dice que 
@@ -34,6 +33,7 @@ public class OtraForma_3 {
 class MyPanel extends JPanel {
 
     int w, h, cont=0;
+    MiHilo elHilo;
 
     public MyPanel() {
 
@@ -55,14 +55,13 @@ class MyPanel extends JPanel {
                 System.out.println( "x:" + me.getX() + "y:" + me.getY() );
             } 
         }); 
+        
+        this.setFocusable(true); // Para que funcione la captura de teclado en un JPanel
 
-        /*
-        // No funciona la captura de teclas aqui y no se por que!
         this.addKeyListener(new KeyAdapter() { 
             public void keyPressed(KeyEvent e) {
 
                 System.out.println("--> tecla pulsada!");
-
 
                 int keyCode = e.getKeyCode();
                 switch (keyCode) {
@@ -73,11 +72,16 @@ class MyPanel extends JPanel {
                     case KeyEvent.VK_RIGHT:
                         System.out.print("Tecla DERECHA");
                         break;
+                    case KeyEvent.VK_Q:
+                        System.out.print("Tecla Q");
+                        elHilo.detenerHilo(); 
+                        break;
                 }
             }
         }); 
-        */
 
+        elHilo = new MiHilo();
+        elHilo.start();        
     }
 
     public void Tamanyo(int w, int h) {
@@ -106,7 +110,30 @@ class MyPanel extends JPanel {
         
         g.setColor(Color.red);
         g.drawLine(0,0,300, 300);
-        
+    }
+}
+
+class MiHilo extends Thread{
+
+    private boolean continuar = true;
+
+    public void detenerHilo(){
+        this.continuar=false;
+        System.out.println("--> hilo stop!");
     }
 
+    public void activarHilo(){
+        continuar=true;
+        System.out.println("--> hilo stop!");
+    }
+
+    public void run(){
+        System.out.println("--> hilo funcionando!");
+        while (continuar){
+            System.out.println("hilo run run");
+        }
+    }
 }
+
+
+
