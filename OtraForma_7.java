@@ -21,11 +21,10 @@ public class OtraForma_7 {
     }
 }
 
-//class MyJPanel extends JPanel {
 class MyJPanel extends JPanel implements Runnable {
 
     int w, h, cont=0;
-    MiHilo elHilo;
+    //MiHilo elHilo;
     private boolean continuar = true;
 
     public MyJPanel() {
@@ -35,7 +34,8 @@ class MyJPanel extends JPanel implements Runnable {
         this.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
                 System.out.println("Resized!");
-                //Tamanyo(e.getWidth(),e.getHeight()); // TODO averiguar como sacar el tamanyo
+                w = getWidth();
+                h = getHeight();
                 System.out.println(e);           
             }
         });
@@ -48,12 +48,10 @@ class MyJPanel extends JPanel implements Runnable {
         }); 
         
         this.setFocusable(true); // Para que funcione la captura de teclado en un JPanel
-
+ 
         this.addKeyListener(new KeyAdapter() { 
             public void keyPressed(KeyEvent e) {
-
                 System.out.println("--> tecla pulsada!");
-
                 int keyCode = e.getKeyCode();
                 switch (keyCode) {
                     case KeyEvent.VK_LEFT:
@@ -64,7 +62,7 @@ class MyJPanel extends JPanel implements Runnable {
                         break;
                     case KeyEvent.VK_Q:
                         System.out.print("Tecla Q");
-                        elHilo.detenerHilo(); 
+                        //elHilo.detenerHilo(); 
                         break;
                 }
             }
@@ -77,12 +75,14 @@ class MyJPanel extends JPanel implements Runnable {
         hilo.start();    
     }
 
+/*
     public void Tamanyo(int w, int h) {
         System.out.println("--> tamanyo!");
         this.w = w;
         this.h = h;
         System.out.println("MyPanel --> ancho:"+ this.w+" alto:"+ this.h);
     }
+*/
 
     public Dimension getPreferredSize() { // sin esto no sale bien el tamanyo, averiguar por que se tiene que definir aqui
         return new Dimension(640,480);
@@ -92,30 +92,22 @@ class MyJPanel extends JPanel implements Runnable {
         paintAnimation(g);
     }
     
-    public void paintAnimation(Graphics g) { 
-        cont++;
-        System.out.println("--> paint! "+cont);
-        if (cont > 1000) cont = 0;
-
+    public void paintAnimation(Graphics g) {
+        System.out.println("paintAnimation!");
         g.setColor(Color.black);
-        g.fillRect(0,0,100, 100);
+        g.fillRect(0,0,w,h);
         g.setColor(Color.yellow);
-        g.drawString("Pinta pinta",40,160);
         g.setColor(Color.green);
         g.drawOval(100, 100, 75, 50); 
-        g.setColor(Color.red);
-        g.drawLine(0,0,300, 300);
     }
 
     public void run(){
-        //System.out.println("hilo runeando: llamando a paint del JPanel!");   
-
         while (continuar){
-            /*
+            
             cont++;
             System.out.println("hilo runeando: llamando a paint del JPanel! "+cont);
             if (cont > 10000000) cont = 0;
-            */
+            
             repaint();
         }
 
@@ -128,6 +120,10 @@ class MiHilo extends Thread{
     int cont=0;
     private boolean continuar = true;
 
+    public MiHilo(){
+
+    }
+
     public void detenerHilo(){
         this.continuar=false;
         System.out.println("--> hilo stop!");
@@ -135,20 +131,17 @@ class MiHilo extends Thread{
 
     public void activarHilo(){
         continuar=true;
-        System.out.println("--> hilo stop!");
+        System.out.println("--> hilo empieza!");
     }
 
     public void run(){
-        System.out.println("--> hilo funcionando!");
         while (continuar){
 
             cont++;
             System.out.println("hilo runeando: llamando a paint del JPanel! "+cont);
             if (cont > 10000000) cont = 0;
 
-        	//pinta();
-            //superPanel.repaint();
-            //super.repaint();
+            repaint();
         }
     }
 }
