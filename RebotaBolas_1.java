@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class OtraForma_7 {
+public class RebotaBolas_1 {
 	
     public static void main(String[] args) {
         System.out.println("--> main!");
@@ -24,7 +24,8 @@ public class OtraForma_7 {
 class MyJPanel extends JPanel implements Runnable {
 
     int w, h, cont=0;
-    //MiHilo elHilo;
+    //Bola bolas[];
+    Bola bolas[] = new Bola[3];
     private boolean continuar = true;
 
     public MyJPanel() {
@@ -68,11 +69,16 @@ class MyJPanel extends JPanel implements Runnable {
             }
         }); 
 
+        //Bola bolas[] = new Bola[3];
+        bolas[0] = new Bola(200,200,10,20,45);
+        bolas[1] = new Bola(100,100,5,50,60);
+        bolas[2] = new Bola(300,300,20,1,180);
+
         //elHilo = new MiHilo();
         //elHilo.start();    
 
         Thread hilo = new Thread(this);
-        hilo.start();    
+        hilo.start(); 
     }
 
     public Dimension getPreferredSize() { // sin esto no sale bien el tamanyo, averiguar por que se tiene que definir aqui
@@ -87,51 +93,98 @@ class MyJPanel extends JPanel implements Runnable {
         System.out.println("paintAnimation!");
         g.setColor(Color.black);
         g.fillRect(0,0,w,h);
-        g.setColor(Color.yellow);
+
         g.setColor(Color.green);
         g.drawOval(100, 100, 75, 50); 
+
+        g.setColor(Color.yellow);
+        for(int i = 0; i < bolas.length; i++){
+            int cr = bolas[i].getRadio();
+            int cx = bolas[i].getX();
+            int cy = bolas[i].getY();
+            g.drawOval(cx, cy, cr, cr); 
+        }
     }
 
     public void run(){
         while (continuar){
             repaint();
         }
-
     }
 
 }
 
-/*
-class mueveTodo extends Thread{
-    int cont=0;
-    private boolean continuar = true;
+class Bola{
+    boolean enMovimiento = true;
+    int x = 0, y = 0, radio= 10, velocidad= 1, angulo= 45;
 
-    public MiHilo(){
-
+    Bola(int x, int y, int radio, int velocidad, int angulo){
+        this.x = x;
+        this.y = y; 
+        this.radio = radio; 
+        this.velocidad = velocidad;
+        this.angulo = angulo;
+        System.out.println("Nueva Bola creada!");
     }
+
+    public void avanza(){
+        if (enMovimiento){
+
+        }
+    }
+
+    public void paraMovimiento(){
+        this.enMovimiento = false;
+    }
+
+    public void reanudaMovimiento(){
+        this.enMovimiento = true;
+    }
+
+    public int getX(){
+        return this.x;
+    }
+
+    public int getY(){
+        return this.y;
+    }
+
+    public int getRadio(){
+        return this.radio;
+    }
+}
+
+class HiloMueveTodo extends Thread{
+
+    boolean continuar=true;
+    int cont = 0;
 
     public void detenerHilo(){
         this.continuar=false;
-        System.out.println("--> hilo stop!");
+        System.out.println("--> Hilo de movimiento para!");
     }
 
     public void activarHilo(){
         continuar=true;
-        System.out.println("--> hilo empieza!");
+        System.out.println("--> Hilo de movimiento se retoma!");
     }
 
     public void run(){
         while (continuar){
 
             cont++;
-            System.out.println("hilo runeando: llamando a paint del JPanel! "+cont);
-            if (cont > 10000000) cont = 0;
+            System.out.println("Hilo de movimiento! "+cont);
+            if (cont > 100) cont = 0;
 
-            repaint();
+            calcula();
         }
     }
+
+    public void calcula(){
+
+    }
 }
-*/
+
 
 
 
