@@ -75,15 +75,6 @@ class MyJPanel extends JPanel {
         elHilo.start();        
     }
 
-/*
-    public void Tamanyo(int w, int h) {
-        System.out.println("--> tamanyo!");
-        this.w = w;
-        this.h = h;
-        System.out.println("MyPanel --> ancho:"+ this.w+" alto:"+ this.h);
-    }
-*/
-
     public Dimension getPreferredSize() { // sin esto no sale bien el tamanyo, averiguar por que se tiene que definir aqui
         return new Dimension(640,480);
     }
