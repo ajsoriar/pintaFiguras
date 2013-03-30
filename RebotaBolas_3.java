@@ -103,8 +103,16 @@ class MyJPanel extends JPanel implements Runnable {
     
     public void paintAnimation(Graphics g) {
         //System.out.println("paintAnimation!");
+
+        //Pinta fondo negro
         g.setColor(Color.black);
         g.fillRect(0,0,w,h);
+
+        //Pinta ejes
+        g.setColor(Color.red);
+        g.drawLine(0, h/2, w, h/2);
+        g.drawLine(w/2, 0, w/2, h);
+
 
         g.setColor(Color.green);
         g.drawOval(100, 100, 75, 50); 
@@ -136,13 +144,7 @@ class HiloMueveTodo extends Thread{
     int cont = 0;
     Bola bolas[];
 
-    public void HiloMueveTodo(){  //int [] numeritos
-    //public void HiloMueveTodo(Bola bolas){
-        //this.bolas = bolas;
-    }
-
-    public void teLoPaso(Bola[] bolas){  //int [] numeritos
-    //public void HiloMueveTodo(Bola bolas){
+    public void teLoPaso(Bola[] bolas){
         this.bolas = bolas;
     }
 
