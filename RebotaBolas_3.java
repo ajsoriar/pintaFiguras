@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class RebotaBolas_2 {
+public class RebotaBolas_3 {
 	
     public static void main(String[] args) {
         System.out.println("--> main!");
@@ -26,6 +26,7 @@ class MyJPanel extends JPanel implements Runnable {
 
     int w, h, cont=0;
     Bola[] bolas;
+    int miX = 100, miY = 100;
     private boolean continuar = true;
 
     public MyJPanel() {
@@ -57,10 +58,20 @@ class MyJPanel extends JPanel implements Runnable {
                 switch (keyCode) {
                     case KeyEvent.VK_LEFT:
                         System.out.print("Tecla IZQUIERDA");
+                        miX-=5;
                         break;
                     case KeyEvent.VK_RIGHT:
                         System.out.print("Tecla DERECHA");
+                        miX+=5;
                         break;
+                    case KeyEvent.VK_UP:
+                        System.out.print("Tecla IZQUIERDA");
+                        miY-=5;
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        System.out.print("Tecla DERECHA");
+                        miY+=5;
+                        break;                    
                     case KeyEvent.VK_Q:
                         System.out.print("Tecla Q");
                         //elHilo.detenerHilo(); 
@@ -105,6 +116,9 @@ class MyJPanel extends JPanel implements Runnable {
             int cy = bolas[i].getY();
             g.drawOval(cx, cy, cr, cr); 
         }
+
+        g.setColor(Color.red);
+        g.drawOval(miX, miY, 5, 5); 
     }
 
     public void run(){
@@ -153,7 +167,7 @@ class HiloMueveTodo extends Thread{
             calcula();
 
             try{
-                Thread.sleep(500);
+                Thread.sleep(100);
             }catch (InterruptedException ex){
                 break;
             }
