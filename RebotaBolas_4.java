@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 //public 
-class RebotaBolas_3 {
+class RebotaBolas_4 {
 	
     public static void main(String[] args) {
         System.out.println("--> main!");
@@ -27,6 +27,7 @@ class MyJPanel extends JPanel implements Runnable {
 
     public int w, h, cont=0;
     Bola[] bolas;
+    int[] limitesPanel;
     int miX = 100, miY = 100;
     private boolean continuar = true;
 
@@ -39,6 +40,9 @@ class MyJPanel extends JPanel implements Runnable {
                 System.out.println("Resized!");
                 w = getWidth();
                 h = getHeight();
+                
+                limitesPanel[0] = w;
+                limitesPanel[1] = h;
                 System.out.println(e);           
             }
         });
@@ -83,9 +87,14 @@ class MyJPanel extends JPanel implements Runnable {
 
         bolas = new Bola[3];
         bolas[0] = new Bola(200,200,10,20,45);
+        bolas[0].teLoPaso(limitesPanel);
+        /*
         bolas[1] = new Bola(100,100,5,50,60);
+        bolas[1].teLoPaso(limitesPanel);
         bolas[2] = new Bola(300,300,20,1,180);
-
+        bolas[2].teLoPaso(limitesPanel);
+		*/
+		
         HiloMueveTodo movimiento = new HiloMueveTodo();
         movimiento.teLoPaso(bolas);
         movimiento.start();    
@@ -181,7 +190,7 @@ class HiloMueveTodo extends Thread{
     public void calcula(){
         
         for(int i = 0; i < bolas.length; i++){
-            bolas[i].avanza(); 
+            //bolas[i].avanza(); 
         }
 
     }
@@ -191,7 +200,7 @@ class HiloMueveTodo extends Thread{
 class Bola{
     boolean enMovimiento = true;
     int x = 0, y = 0, radio= 10, velocidad= 1, angulo= 45;
-
+	int[] limitesPanel;
     double realX = 0, realY =0;
 
     Bola(int x, int y, int radio, int velocidad, int angulo){
@@ -207,17 +216,24 @@ class Bola{
 
         System.out.println("Nueva Bola creada!");
     }
+    
+    public void teLoPaso(int[] limitesPanel){
+        this.limitesPanel = limitesPanel;
+    }
 
     public void avanza(){
 
         int angE = this.angulo;
         int angS = 0;
-        int bx = x + this.radio;
-        int by = y + this.radio;
+        int bx; // = x + this.radio;
+        int by; // = y + this.radio;
+        int w = limitesPanel[0];
+        int h = limitesPanel[1];
 
         if (enMovimiento){
 
             // Desplazamiento de la bola
+            
 
             // Ver si hay un cambio de direccion por choque contra las paredes.
             if (angE >= 0 || angE <90){ // CUADRANTE 1
@@ -226,8 +242,8 @@ class Bola{
             }
 
             if (angE >= 90 || angE <180){ // CUADRANTE 2
-                if(by < h) { } // Caso C
-                if(bx < 0) { } // Caso D
+                if(by < h) { angS = 180 + (angE - 90); } // Caso C
+                if(bx < 0) { angS = angE - 90; } // Caso D
             }
 
             if (angE >= 180 || angE <270){ // CUADRANTE 3
