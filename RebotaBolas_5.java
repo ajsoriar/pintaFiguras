@@ -1,8 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.Math;
 
-public class RebotaBolas_4 {
+public class RebotaBolas_5 {
 	
     public static void main(String[] args) {
         System.out.println("--> main!");
@@ -197,21 +198,17 @@ class HiloMueveTodo extends Thread{
 /* ------------------------------------------------------------- */
 class Bola{
     boolean enMovimiento = true;
-    int x = 0, y = 0, radio= 10, velocidad= 1, angulo= 45;
+    int radio= 10, velocidad= 1, angulo= 45;
 	int[] limitesPanel;
-    double realX = 0, realY =0;
+    double x = 0, y = 0, desplazamientoX, desplazamientoY;
 
     Bola(int x, int y, int radio, int velocidad, int angulo){
-
         this.x = x;
         this.y = y; 
         this.radio = radio; 
         this.velocidad = velocidad;
         this.angulo = angulo;
-
-        this.realX = x; 
-        this.realY = y;
-
+        calculaDesplazamiento();
         System.out.println("Nueva Bola creada!");
     }
     
@@ -219,67 +216,72 @@ class Bola{
         this.limitesPanel = limitesPanel;
     }
 
-    public void avanza(){
-        System.out.println("paintAnimation!");
-
-            this.x++; // = this.realX +1;
-            this.y++; // = this.realY +1;
-
-        /*
-        int angE = this.angulo;
-        int angS = 0;
-        int bx; // = x + this.radio;
-        int by; // = y + this.radio;
-
-        int w = limitesPanel[0];
-        int h = limitesPanel[1];
-
-        if (enMovimiento){
-
-            // Desplazamiento de la bola
-            this.realX = this.realX +1;
-            this.realY = this.realY +1;
-            
-
-            // Ver si hay un cambio de direccion por choque contra las paredes.
-
-            if (angE >= 0 || angE <90){ // CUADRANTE 1
-                bx = x + this.radio;
-                by = y + this.radio;
-                if(bx < w) { angS = 90 - angE; } // Caso A
-                if(by < h) { angS = 270 + (90 - angE); } // Caso B
-            }
-
-            if (angE >= 90 || angE <180){ // CUADRANTE 2
-                bx = x + this.radio;
-                by = y + this.radio;
-                if(by < h) { angS = 180 + (angE - 90); } // Caso C
-                if(bx < 0) { angS = angE - 90; } // Caso D
-            }
-
-            if (angE >= 180 || angE <270){ // CUADRANTE 3
-                bx = x + this.radio;
-                by = y + this.radio;
-                if(bx < 0) { } // Caso E
-                if(by < 0) { } // Caso F
-            }
-
-            if (angE >= 270 || angE <380){ // CUADRANTE 4
-                bx = x + this.radio;
-                by = y + this.radio;
-                if(by < 0) { } // Caso G
-                if(bx > w) { } // Caso H
-            }
-
-        }
-
-        this.angulo = angS;
-        this.x = (int) realX; 
-        this.y = (int) realY;
-        */
-        
+    public void calculaDesplazamiento(){
+        double anguloRadianes = Math.toRadians(this.angulo);
+        this.desplazamientoX = Math.cos(anguloRadianes);
+        this.desplazamientoY = Math.sin(anguloRadianes);
     }
 
+    public void avanza(){
+        if (enMovimiento){
+            this.x = this.x + desplazamientoX;
+            this.y = this.y + desplazamientoY;
+        }
+    }
+    
+    /*
+    int angE = this.angulo;
+    int angS = 0;
+    int bx; // = x + this.radio;
+    int by; // = y + this.radio;
+
+    int w = limitesPanel[0];
+    int h = limitesPanel[1];
+    */
+
+    /*  SACAR ESTA LOGICA FUERA DE AQUI!!!!!!
+
+    if (enMovimiento){
+
+        // Desplazamiento de la bola
+        
+
+        // Ver si hay un cambio de direccion por choque contra las paredes.
+
+        if (angE >= 0 || angE <90){ // CUADRANTE 1
+            bx = (int)x + this.radio;
+            by = (int)y + this.radio;
+            if(bx < w) { angS = 90 - angE; } // Caso A
+            if(by < h) { angS = 270 + (90 - angE); } // Caso B
+            calculaDesplazamiento();
+        }
+
+        if (angE >= 90 || angE <180){ // CUADRANTE 2
+            bx = (int)x + this.radio;
+            by = (int)y + this.radio;
+            if(by < h) { angS = 180 + (angE - 90); } // Caso C
+            if(bx < 0) { angS = angE - 90; } // Caso D
+            calculaDesplazamiento();
+        }
+
+        if (angE >= 180 || angE <270){ // CUADRANTE 3
+            bx = (int)x + this.radio;
+            by = (int)y + this.radio;
+            if(bx < 0) { } // Caso E
+            if(by < 0) { } // Caso F
+            calculaDesplazamiento();
+        }
+
+        if (angE >= 270 || angE <380){ // CUADRANTE 4
+            bx = (int)x + this.radio;
+            by = (int)y + this.radio;
+            if(by < 0) { } // Caso G
+            if(bx > w) { } // Caso H
+            calculaDesplazamiento();
+        }
+
+    }
+    */
 
     public void paraMovimiento(){
         this.enMovimiento = false;
@@ -291,11 +293,11 @@ class Bola{
 
 
     public int getX(){
-        return this.x;
+        return (int) this.x;
     }
 
     public int getY(){
-        return this.y;
+        return (int) this.y;
     }
 
     public int getRadio(){
