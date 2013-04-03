@@ -87,14 +87,11 @@ class MyJPanel extends JPanel implements Runnable {
 
         bolas = new Bola[3];
         bolas[0] = new Bola(200,200,10,20,45);
-        bolas[0].teLoPaso(limitesPanel);
-        bolas[1] = new Bola(100,100,5,50,60);
-        bolas[1].teLoPaso(limitesPanel);
-        bolas[2] = new Bola(300,300,20,1,180);
-        bolas[2].teLoPaso(limitesPanel);
+        bolas[1] = new Bola(100,100,5,50,80);
+        bolas[2] = new Bola(100,300,20,1,180);
 
         HiloMueveTodo movimiento = new HiloMueveTodo();
-        movimiento.teLoPaso(bolas);
+        movimiento.teLoPaso(bolas,limitesPanel);
         movimiento.start();    
 
         Thread hilo = new Thread(this); // Este JPanel implementa runeable!
@@ -122,7 +119,7 @@ class MyJPanel extends JPanel implements Runnable {
         g.drawLine(w/2, 0, w/2, h);
 
         g.setColor(Color.green);
-        g.drawOval(100, 100, 75, 50); 
+        g.drawRect(0, 0, 640, 480); 
 
         g.setColor(Color.yellow);
         
@@ -152,9 +149,11 @@ class HiloMueveTodo extends Thread{
     boolean continuar=true;
     int cont = 0;
     Bola bolas[];
+    int dimensiones[];
 
-    public void teLoPaso(Bola[] bolas){
+    public void teLoPaso(Bola[] bolas, int[] dimensiones){
         this.bolas = bolas;
+        this.dimensiones = dimensiones;
     }
 
     public void detenerHilo(){
@@ -187,9 +186,26 @@ class HiloMueveTodo extends Thread{
     }
 
     public void calcula(){
+
+        int w = 640; //this.dimensiones[0];
+        int h = 480; //this.dimensiones[1];
         
         for(int i = 0; i < bolas.length; i++){
-            bolas[i].avanza(); 
+            bolas[i].avanza();
+            if ( bolas[i].getX() < 0){
+                bolas[i].setAngulo(0);      
+            }
+            if ( bolas[i].getX() > w){
+                bolas[i].setAngulo(180);
+            }
+            if ( bolas[i].getY() < 0){
+                bolas[i].setAngulo(90);      
+            }
+            if ( bolas[i].getY() > h){
+                bolas[i].setAngulo(270);
+            }
+            bolas[i].calculaDesplazamiento();
+            System.out.println("x:"+bolas[i].getX() + " y:"+bolas[i].getY() + " ang:"+bolas[i].getAngulo());
         }
 
     }
@@ -211,15 +227,11 @@ class Bola{
         calculaDesplazamiento();
         System.out.println("Nueva Bola creada!");
     }
-    
-    public void teLoPaso(int[] limitesPanel){
-        this.limitesPanel = limitesPanel;
-    }
 
     public void calculaDesplazamiento(){
         double anguloRadianes = Math.toRadians(this.angulo);
-        this.desplazamientoX = Math.cos(anguloRadianes);
-        this.desplazamientoY = Math.sin(anguloRadianes);
+        this.desplazamientoX = Math.cos(anguloRadianes)*this.velocidad;
+        this.desplazamientoY = Math.sin(anguloRadianes)*this.velocidad;
     }
 
     public void avanza(){
@@ -228,7 +240,7 @@ class Bola{
             this.y = this.y + desplazamientoY;
         }
     }
-    
+ 
     /*
     int angE = this.angulo;
     int angS = 0;
@@ -291,7 +303,6 @@ class Bola{
         this.enMovimiento = true;
     }
 
-
     public int getX(){
         return (int) this.x;
     }
@@ -304,6 +315,10 @@ class Bola{
         return this.radio;
     }
 
+    public int getAngulo(){
+        return this.angulo;
+    }
+
     public void setX(int x){
         this.x = x;
     }
@@ -314,6 +329,10 @@ class Bola{
 
     public void setRadio(int radio){
         this.radio = radio;
+    }
+
+    public void setAngulo(int angulo){
+        this.angulo = angulo;
     }
 }
 
