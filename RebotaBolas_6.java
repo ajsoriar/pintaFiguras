@@ -198,52 +198,42 @@ class HiloMueveTodo extends Thread{
             int r = bolas[i].getRadio();
 
             if ( bolas[i].getX() < 0){
-
                 if (angE <= 270 && angE >= 90){
-                    if (angE <= 180){
-                        //angS = angE - 90;
-                        angS = angE - 90;
-                    }else{
-                        angS = angE + 90;
+                    if (angE <= 180){ // BL
+                        angS = 180 - angE;
+                    }else{ //CL
+                        angS = 360 - (angE - 180);
                     }
                 }
-
             }
 
             if ( bolas[i].getX()+r > w){
-
-                if (angE <= 90){
-                    angS = angE + 90;
+                if (angE <= 90){ // AR     
+                    angS = 180 - angE;
                 }
-
-                if (angE >= 270){
-                    angS = angE - 90;
+                if (angE >= 270){ // DR
+                    angS = 180 + (360-angE);
                 }
-                 
             }
 
             if ( bolas[i].getY() < 0){  
-
                 if (angE <= 360 && angE >= 180){
-                    if (angE >= 270){
-                        angS = angE - 270;
-                    }else{
-                        angS = angE - 90;
+                    if (angE >= 270){ // DT
+                        angS = 90 - (angE-270);
+                    }else{ // CT
+                        angS = 90 + 270 - angE;
                     }
                 }
-
             }
 
             if ( bolas[i].getY()+r > h){
-
                 if (angE <= 180 && angE >= 0){
-                    if (angE < 90){
-                        angS = angE + 270;
-                    }else{
-                        angS = angE + 90;
+                    if (angE < 90){ //AB
+                        angS = 270 + (90-angE);
+                    }else{ //BB
+                        angS = 270 - (angE - 90);
                     }
                 }
-
             }
 
             bolas[i].setAngulo(angS);
